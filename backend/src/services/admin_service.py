@@ -4,11 +4,12 @@ from passlib.context import CryptContext
 from src.crud import get_admin_by_email, create_admin
 from src.schemas import AdminCreate
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto") #herramienta python
+# Usamos Argon2 (ya que el bcrypt me dio problemas)
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 class AdminService:
 
-    @staticmethod #estaticos xq no necesito estado de clase
+    @staticmethod
     def hash_password(password: str) -> str:
         return pwd_context.hash(password)
 
@@ -25,8 +26,8 @@ class AdminService:
         if existing:
             raise ValueError("Admin already exists") #en fastapi http 409 conflict
 
-        #hasheo contraseña antes de guardar
-        admin_data.password = AdminService.hash_password(admin_data.password)
+        hashed = AdminService.hash_password(admin_data.password)
+        admin_data.password = hashed
 
         return create_admin(db, admin_data)
 

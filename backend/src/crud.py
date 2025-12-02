@@ -8,19 +8,19 @@ from src.schemas import (
     VoteCreate,
 )
 
+
 #crud admin
 def create_admin(db: Session, admin: AdminCreate):
-    #crea un nuevo admin
     db_admin = Admin(
         name=admin.name,
         lastName=admin.lastName,
         email=admin.email,
-        password=admin.password  #lo hasheo en el service
+        password=admin.password  # ya viene hasheada desde el service
     )
     db.add(db_admin)
-    db.commit() 
-    db.refresh(db_admin) 
-    return db_admin 
+    db.commit()
+    db.refresh(db_admin)
+    return db_admin
 
 
 def get_admin_by_email(db: Session, email: str):
