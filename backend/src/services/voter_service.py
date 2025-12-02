@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from src.crud import (
     create_voter,
     get_voter_by_document,
-    get_all_candidates
+    get_all_candidates,
+    get_all_voters
 )
 from src.schemas import VoterCreate
 
@@ -31,3 +32,7 @@ class VoterService:
     @staticmethod
     def list_candidates(db: Session):
         return get_all_candidates(db)
+
+    @staticmethod
+    def list_all_voters(db: Session):
+        return get_all_voters(db)

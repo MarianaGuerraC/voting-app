@@ -105,3 +105,7 @@ def get_vote_results(db: Session):
 #busca votante por id
 def get_voter_by_id(db: Session, voter_id: int):
     return db.query(Voter).filter(Voter.id == voter_id).first()
+
+def get_all_voters(db: Session):
+    #devuelve todos los votantes y candidatos
+    return db.query(Voter).all()
