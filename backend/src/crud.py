@@ -1,12 +1,11 @@
 from sqlalchemy.orm import Session
-from datetime import datetime
+from datetime import datetime, timezone #ya que utcnow esta en desuso
 from sqlalchemy import func
 from src.models import Admin, Voter, Vote
 from src.schemas import (
     AdminCreate,
     VoterCreate,
     VoteCreate,
-    VoteAPICreate
 )
 
 #crud admin
@@ -62,7 +61,7 @@ def register_new_vote(db: Session, vote: VoteCreate):
     db_vote = Vote(
         candidate_id=vote.candidate_id,
         candidate_voted_id=vote.candidate_voted_id,
-        date=vote.date if vote.date else datetime.utcnow()
+        date=vote.date if vote.date else datetime.now(timezone.utc)
     )
 
     db.add(db_vote)

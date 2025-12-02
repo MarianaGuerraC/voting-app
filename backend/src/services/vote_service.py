@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from datetime import datetime
 
 from src.crud import (
     register_new_vote,
@@ -39,7 +38,7 @@ class VoteService:
         vote_internal = VoteCreate(
             candidate_id=candidate.id,
             candidate_voted_id=voter.id,
-            date=datetime.utcnow()
+            #date=datetime.utcnow()  ya lo asigna el crud
         )
 
         # Registrar voto en DB
