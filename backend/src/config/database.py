@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 import os
+from src.models import Base
 
 load_dotenv()  #cargo variables del .env
 
@@ -18,6 +19,12 @@ DATABASE_URL = (
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+#necesaria para lifespan en main.py
+def create_db_tables():
+    #crea todas las tablas definidas en Base.metadata si no existen
+    Base.metadata.create_all(bind=engine)
 
 #dependencia para fastapi
 def get_db():
