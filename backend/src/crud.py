@@ -101,3 +101,7 @@ def get_vote_results(db: Session):
 
     # Nota: Estos resultados serán mapeados a CandidateResult en la Capa de Servicios/Router
     return results
+
+#busca votante por id
+def get_voter_by_id(db: Session, voter_id: int):
+    return db.query(Voter).filter(Voter.id == voter_id).first()
