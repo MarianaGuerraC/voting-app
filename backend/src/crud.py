@@ -16,7 +16,7 @@ def create_admin(db: Session, admin: AdminCreate):
         name=admin.name,
         lastName=admin.lastName,
         email=admin.email,
-        password=admin.password  #se puede hashear despues
+        password=admin.password  #lo hasheo en el service
     )
     db.add(db_admin)
     db.commit() 
@@ -74,7 +74,6 @@ def register_new_vote(db: Session, vote: VoteCreate):
 
 def has_voter_already_voted(db: Session, voter_id: int):
     #verifica si un votante ya tiene un voto registrado.
-    
     return (
         db.query(Vote)
         .filter(Vote.candidate_voted_id == voter_id)
@@ -99,7 +98,6 @@ def get_vote_results(db: Session):
         .all()
     )
 
-    # Nota: Estos resultados serán mapeados a CandidateResult en la Capa de Servicios/Router
     return results
 
 #busca votante por id

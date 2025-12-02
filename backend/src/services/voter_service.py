@@ -4,7 +4,8 @@ from src.crud import (
     create_voter,
     get_voter_by_document,
     get_all_candidates,
-    get_all_voters
+    get_all_voters,
+    get_voter_by_id
 )
 from src.schemas import VoterCreate
 
@@ -36,3 +37,8 @@ class VoterService:
     @staticmethod
     def list_all_voters(db: Session):
         return get_all_voters(db)
+
+    @staticmethod
+    def get_voter_by_id(db: Session, voter_id: int):
+        voter = get_voter_by_id(db, voter_id)
+        return voter
