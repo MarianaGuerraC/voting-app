@@ -48,3 +48,11 @@ def get_voter_detail(voter_id: int, db: Session = Depends(get_db)):
         #devuelve 404 Not Found si el votante no existe
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Voter not found.")
     return voter
+
+#util para frontend
+@router.get("/candidates", response_model=List[VoterResponse])
+def list_candidates(db: Session = Depends(get_db)):
+    """
+    Lista todos los votantes que son candidatos.
+    """
+    return VoterService.list_candidates(db)
