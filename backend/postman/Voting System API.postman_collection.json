@@ -1,0 +1,324 @@
+{
+	"info": {
+		"_postman_id": "48b4f39e-88fa-4a63-8ad0-42935492f832",
+		"name": "Voting System API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39070080"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin_nuevo@test123.com\",\r\n  \"password\": \"test2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Admin123\",\r\n    \"lastName\": \"Principal\",\r\n    \"email\": \"admin_nuevo@test123.com\",\r\n    \"password\": \"test2\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/login (POST) ERROR 401",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin_nuevo@test123.com\",\r\n  \"password\": \"wrongpwd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Voters",
+			"item": [
+				{
+					"name": "/voters/ (POST)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Jesica\",\r\n  \"lastName\": \"Pérez\",\r\n  \"document\": \"12567345\",\r\n  \"dob\": \"1990-05-22\",\r\n  \"is_candidate\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/voters/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"voters",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/voters/ (GET)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/voters/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"voters",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/voters/{id} (GET)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/voters/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"voters",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/voters/ (POST) ERROR 409",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\": \"Duplicado\",\r\n \"lastName\": \"Error\",\r\n  \"document\": \"40011223\",\r\n   \"dob\": \"2000-01-01\",\r\n    \"is_candidate\": false \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/voters/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"voters",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Votes",
+			"item": [
+				{
+					"name": "/votes/ (POST)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"document\": \"37766554\", //juan garcia id 1\r\n \"candidate_id\": 9\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/votes/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"votes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/votes/results (GET)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/votes/results",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"votes",
+								"results"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/votes/ (POST) ERROR 409",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"document\": \"40011223\",\r\n\"candidate_id\": 9 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/votes/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"votes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/votes/ (POST) ERROR 400",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n\"document\": \"42122334\", \r\n\"candidate_id\": 1 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/votes/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"votes",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		}
+	]
+}
