@@ -2,7 +2,7 @@ import {
   XhrFactory,
   parseCookieValue,
   withHttpTransferCache
-} from "./chunk-QTCLK7C2.js";
+} from "./chunk-IOH7F4EQ.js";
 import {
   APP_ID,
   ApplicationModule,
@@ -45,7 +45,6 @@ import {
   RendererStyleFlags2,
   RuntimeError,
   SecurityContext,
-  Subject,
   TESTABILITY,
   TESTABILITY_GETTER,
   TemplateRef,
@@ -55,9 +54,6 @@ import {
   ViewContainerRef,
   ViewEncapsulation,
   XSS_SECURITY_URL,
-  __async,
-  __spreadProps,
-  __spreadValues,
   _global,
   _sanitizeHtml,
   _sanitizeUrl,
@@ -102,7 +98,13 @@ import {
   ɵɵinject,
   ɵɵinjectAttribute,
   ɵɵstyleProp
-} from "./chunk-TWSJ3NIX.js";
+} from "./chunk-G57EAR6F.js";
+import {
+  Subject,
+  __async,
+  __spreadProps,
+  __spreadValues
+} from "./chunk-PSTBIIF2.js";
 
 // node_modules/@angular/common/fesm2022/_location-chunk.mjs
 var _DOM = null;
@@ -6152,4 +6154,4 @@ export {
   provideClientHydration,
   VERSION2 as VERSION
 };
-//# sourceMappingURL=chunk-WREFGCVF.js.map
+//# sourceMappingURL=chunk-ZDPPV5U2.js.map
