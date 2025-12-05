@@ -4,6 +4,9 @@ from passlib.context import CryptContext
 from src.crud import get_admin_by_email, create_admin
 from src.schemas import AdminCreate
 
+from fastapi import HTTPException, status
+
+
 # Usamos Argon2 (ya que el bcrypt me dio problemas)
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
@@ -34,11 +37,9 @@ class AdminService:
     @staticmethod
     def login_admin(db: Session, email: str, password: str):
         admin = get_admin_by_email(db, email)
-
-        if not admin:
-            raise ValueError("Invalid credentials")
-        
-        if not AdminService.verify_password(password, admin.password):
-            raise ValueError("Invalid credentials")
-
+        if not admin or not AdminService.verify_password(password, admin.password):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect credentials"
+            )
         return admin

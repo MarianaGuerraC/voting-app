@@ -30,34 +30,37 @@ def register_admin(admin_data: AdminCreate, db: Session = Depends(get_db)):
         )
 
 
-
-
 #inicio de sesion
-@router.post("/login") 
+@router.post("/login")
 def login_admin(login_data: AdminLogin, db: Session = Depends(get_db)):
     """
-    Inicia sesion verificando el email y la contraseña hasheada.
+    Inicia sesión verificando email y contraseña hasheada.
+    Devuelve JWT y datos del admin.
     """
     try:
-        admin_orm = AdminService.login_admin(
-            db, login_data.email, login_data.password
-        )
+        #intento login
+        admin_orm = AdminService.login_admin(db, login_data.email, login_data.password)
+    except HTTPException as e:
+        #si falla doy error 401
+        raise e
+    except Exception as e:
+        #cualquier otro error
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
-        # GENERAR TOKEN JWT
-        access_token = create_access_token({
-            "sub": admin_orm.email,
-            "id": admin_orm.id
-        })
+    #genero token
+    access_token = create_access_token({
+        "sub": admin_orm.email,
+        "id": admin_orm.id
+    })
 
-        # RESPUESTA CORRECTA PARA ANGULAR
-        return {
-            "access_token": access_token,
-            "token_type": "bearer"
+    #respuesta para angular
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "admin": {
+            "id": admin_orm.id,
+            "name": admin_orm.name,
+            "lastName": admin_orm.lastName,
+            "email": admin_orm.email
         }
-
-    except ValueError:
-        #401 Unauthorized si las credenciales son inválidas
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials"
-        )
+    }
