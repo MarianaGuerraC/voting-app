@@ -16,27 +16,32 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-   //Intenta iniciar sesión con email y password.
-   //Si es exitoso, almacena el token JWT.
+  //Realiza el login y almacena el token JWT.
+login(email: string, password: string): Observable<any> {
+  const loginData = { email, password };
 
-  login(email: string, password: string): Observable<any> {
-    const loginData = { username: email, password: password };
-
-    return this.http.post<any>(this.apiUrl, loginData).pipe(
-      tap(response => {
-        const token = response.access_token;
-        if (token) {
-          localStorage.setItem('access_token', token);
-          this.loggedIn.next(true);
+  return this.http.post<any>(this.apiUrl, loginData, {
+    headers: { 'Content-Type': 'application/json' }
+  }).pipe(
+    tap(response => {
+      const token = response.access_token;
+      if (token) {
+        localStorage.setItem('access_token', token);
+        if (response.admin) {
+          localStorage.setItem('admin', JSON.stringify(response.admin));
         }
-      })
-    );
-  }
+        this.loggedIn.next(true);
+      }
+    })
+  );
+}
+
 
 
   //Cierra la sesion eliminando el token.
-  logout(): void {
+logout(): void {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('admin');
     this.loggedIn.next(false);
   }
 

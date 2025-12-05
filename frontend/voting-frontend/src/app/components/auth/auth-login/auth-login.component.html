@@ -1,1 +1,46 @@
-<p>auth-login works!</p>
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+                id="email" 
+                type="email" 
+                name="email" 
+                [(ngModel)]="email" 
+                #emailInput="ngModel" 
+                required 
+                email 
+                class="form-control"
+            >
+            <div *ngIf="(emailInput.invalid && emailInput.touched) || (emailInput.invalid && submitted)" class="text-danger">
+                <span *ngIf="emailInput.errors?.['required']">El email es obligatorio.</span>
+                <span *ngIf="emailInput.errors?.['email']">El formato del email no es válido.</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input 
+                id="password" 
+                type="password" 
+                name="password" 
+                [(ngModel)]="password" 
+                #passwordInput="ngModel" 
+                required 
+                class="form-control"
+            >
+            <div *ngIf="(passwordInput.invalid && passwordInput.touched) || (passwordInput.invalid && submitted)" class="text-danger">
+                La contraseña es obligatoria.
+            </div>
+        </div>
+        <!-- si hay errores esta deshabilitado -->
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary mt-3">
+            Entrar
+        </button>
+    </form>
+</div>
