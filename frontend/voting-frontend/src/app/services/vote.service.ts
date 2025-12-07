@@ -18,7 +18,7 @@ getCandidates(): Observable<any> {
   }
 
   sendVote(document: string, candidateId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/vote`, {
+    return this.http.post(`${this.apiUrl}/votes/`, {
       document: document,
       candidate_id: candidateId
     });

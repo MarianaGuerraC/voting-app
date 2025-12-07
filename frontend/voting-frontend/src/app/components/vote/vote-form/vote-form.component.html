@@ -19,6 +19,7 @@
         name="ci"
         required
         class="form-control"
+        (input)="clearMessages()"
         placeholder="Enter your identification number"
       />
       <div
@@ -33,6 +34,7 @@
       <label for="candidate" class="form-label">Select Candidate</label>
       <select
         id="candidate"
+        (input)="clearMessages()"
         [(ngModel)]="selectedCandidate"
         #candidateInput="ngModel"
         name="candidate"

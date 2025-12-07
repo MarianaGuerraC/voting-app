@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VoteService } from '../../../services/vote.service';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-vote-form',
@@ -20,12 +22,17 @@ export class VoteFormComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private voteService: VoteService, public router: Router) { }
+  constructor(private voteService: VoteService, public router: Router,  private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.voteService.getCandidates().subscribe({
-      next: (data) => (this.candidates = data),
-      error: () => (this.errorMessage = 'Could not load candidates.'),
+      next: (data) => {
+        this.candidates = data
+        this.cdr.detectChanges();
+      },
+      error: () => {this.errorMessage = 'Could not load candidates.';
+      this.cdr.detectChanges();
+      }
     });
   }
 
@@ -36,6 +43,7 @@ export class VoteFormComponent implements OnInit {
 
     if (!this.ci || !this.selectedCandidate) {
       this.errorMessage = 'Please complete all fields.';
+      this.cdr.detectChanges();
       return;
     }
 
@@ -47,6 +55,8 @@ export class VoteFormComponent implements OnInit {
         this.ci = '';
         this.selectedCandidate = '';
         this.submitted = false;
+
+        this.cdr.detectChanges();
       },
       error: (err) => {
         if (err.status === 409) {
@@ -69,6 +79,7 @@ export class VoteFormComponent implements OnInit {
           this.errorMessage =
             'Server connection error. Please try again later.';
         }
+        this.cdr.detectChanges();
       },
     });
   }
