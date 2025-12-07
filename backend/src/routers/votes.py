@@ -51,3 +51,16 @@ def vote_results(db: Session = Depends(get_db)):
     Devuelve lista de candidatos con cantidad de votos.
     """
     return VoteService.results(db)
+
+@router.get("/candidates")
+def get_candidates_list(db: Session = Depends(get_db)):
+    """
+    Obtiene la lista de todos los votantes que estan marcados como candidatos (is_candidate=True).
+    """
+    #importo y uso la funcion del crud
+    from src.crud import get_all_candidates 
+    
+    candidates = get_all_candidates(db)
+    
+    #fastapi serializa automaticamente el resultado a json
+    return candidates
