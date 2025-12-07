@@ -1,9 +1,7 @@
-// frontend/voting-frontend/src/app/services/voter.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment'; 
-// ¡IMPORTACIÓN CORREGIDA!
 import { Voter, VoterPayload } from '../models/voter.model'; 
 
 @Injectable({

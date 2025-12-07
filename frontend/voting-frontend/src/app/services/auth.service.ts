@@ -36,22 +36,19 @@ login(email: string, password: string): Observable<any> {
   );
 }
 
-
-
-  //Cierra la sesion eliminando el token.
-logout(): void {
+  //Cierra la sesion eliminando el token
+  logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('admin');
     this.loggedIn.next(false);
   }
 
-  //Verifica si existe un token almacenado.
-
+  //Verifica si existe un token almacenado
   private hasToken(): boolean {
     return !!localStorage.getItem('access_token');
   }
 
-  //Obtiene el token JWT actual.
+  //Obtiene el token actual
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
