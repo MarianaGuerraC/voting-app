@@ -64,3 +64,23 @@ def get_candidates_list(db: Session = Depends(get_db)):
     
     #fastapi serializa automaticamente el resultado a json
     return candidates
+
+@router.get("/all")
+def get_all_votes(db: Session = Depends(get_db)):
+    """
+    Lista todos los votos con nombre del votante, candidato y fecha.
+    """
+    from src.crud import get_all_votes
+    return get_all_votes(db)
+
+
+@router.get("/{vote_id}")
+def get_vote_detail(vote_id: int, db: Session = Depends(get_db)):
+    """
+    Devuelve detalle completo de un voto.
+    """
+    from src.crud import get_vote_detail
+    detail = get_vote_detail(db, vote_id)
+    if not detail:
+        raise HTTPException(status_code=404, detail="Vote not found")
+    return detail

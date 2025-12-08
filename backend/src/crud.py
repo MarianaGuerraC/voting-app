@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, aliased
 from datetime import datetime, timezone #ya que utcnow esta en desuso
 from sqlalchemy import func
 from src.models import Admin, Voter, Vote
@@ -106,3 +106,51 @@ def get_voter_by_id(db: Session, voter_id: int):
 def get_all_voters(db: Session):
     #devuelve todos los votantes y candidatos
     return db.query(Voter).all()
+
+
+def get_all_votes(db: Session):
+    Candidate = aliased(Voter)
+
+    rows = (
+        db.query(
+            Vote.id.label("vote_id"),
+            Voter.name.label("voter_name"),
+            Voter.lastName.label("voter_lastName"),
+            Voter.document.label("voter_document"),
+            Voter.dob.label("voter_dob"),
+            Vote.date.label("vote_date"),
+            Candidate.name.label("candidate_name"),
+            Candidate.lastName.label("candidate_lastName")
+        )
+        .join(Voter, Voter.id == Vote.candidate_voted_id)
+        .join(Candidate, Candidate.id == Vote.candidate_id)
+        .order_by(Vote.date.desc())
+        .all()
+    )
+
+    return [dict(r._mapping) for r in rows]
+
+
+#ver detalle de un voto
+def get_vote_detail(db: Session, vote_id: int):
+
+    V2 = Voter.__table__.alias("v2")
+
+    row = (
+        db.query(
+            Vote.id.label("vote_id"),
+            Voter.name.label("voter_name"),
+            Voter.lastName.label("voter_lastName"),
+            Voter.document.label("voter_document"),
+            Voter.dob.label("voter_dob"),
+            Vote.date.label("vote_date"),
+            V2.c.name.label("candidate_name"),
+            V2.c.lastName.label("candidate_lastName")
+        )
+        .join(Voter, Voter.id == Vote.candidate_voted_id)
+        .join(V2, Vote.candidate_id == V2.c.id)
+        .filter(Vote.id == vote_id)
+        .first()
+    )
+
+    return dict(row._mapping) if row else None

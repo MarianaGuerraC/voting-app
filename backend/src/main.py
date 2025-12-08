@@ -10,7 +10,6 @@ print("Database initialized")
 
 app = FastAPI()
 
-# CORS SIEMPRE antes de los routers
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:4200"],
