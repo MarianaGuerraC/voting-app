@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VoteService } from '../../../services/vote.service';
+import { AuthService } from '../../../services/auth.service'; // <-- importamos AuthService
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-results',
@@ -10,18 +12,27 @@ import { VoteService } from '../../../services/vote.service';
 })
 export class ResultsComponent implements OnInit {
 
-  results: any[] = [];       //candidatos + votos
-  votes: any[] = [];         //lista de votos
-  selectedVote: any = null;  //detalle del voto
+  results: any[] = [];
+  votes: any[] = [];
+  selectedVote: any = null;
 
   isLoading = true;
   errorMessage = '';
+  isAdmin = false; // <-- flag admin
 
-  constructor(private voteService: VoteService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private voteService: VoteService,
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadResults();
     this.loadVotes();
+
+    //reviso si hay token de admin para habilitar el boton
+    this.isAdmin = !!this.authService.getToken();
   }
 
   loadResults(): void {
@@ -58,9 +69,11 @@ export class ResultsComponent implements OnInit {
         this.selectedVote = data;
         this.cdr.detectChanges();
       },
-      error: () => {
-        alert('Error loading vote detail');
-      }
+      error: () => alert('Error loading vote detail')
     });
+  }
+
+  goBack() {
+    this.router.navigate(['/admin']);
   }
 }

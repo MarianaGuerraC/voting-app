@@ -1,33 +1,22 @@
-<div class="admin-container">
+<div class="container mt-4">
 
-    <h1 class="text-center mb-4">Administration Panel</h1>
-    
-    <div class="menu-grid">
+  <h2 class="text-center mb-3">Administration Panel</h2>
 
-        <button class="menu-btn" [routerLink]="['top-candidates']">
-            Most Voted Candidates
-        </button>
+  <!-- Botones de navegación dentro del panel -->
+  <div class="mb-4 d-flex gap-2">
+    <button class="btn btn-primary" (click)="selectedTab = 'voter'">Add New Voter</button>
+    <button class="btn btn-secondary" (click)="selectedTab = 'password'">Change Admin Password</button>
+    <button class="btn btn-success" (click)="router.navigate(['/results'])">View Results</button>
+    <button class="btn btn-danger ms-auto" (click)="logout()">Log Out</button>
+  </div>
 
-        <button class="menu-btn" [routerLink]="['vote-list']">
-            List Registered Votes
-        </button>
-        
-        <button class="menu-btn" [routerLink]="['voter-form']">
-            Add New Voter
-        </button>
+  <!-- Contenido según tab seleccionado -->
+  <div *ngIf="selectedTab === 'voter'">
+    <app-voter-form></app-voter-form>
+  </div>
 
-        <button class="menu-btn" [routerLink]="['change-password']">
-            Change Administrator Password
-        </button>
-
-    </div>
-
-    <div class="content-area mt-4">
-        <router-outlet></router-outlet>
-    </div>
-
-    <div class="logout-area mt-4">
-        <button class="btn btn-danger w-100" (click)="logout()">Log Out</button>
-    </div>
+  <div *ngIf="selectedTab === 'password'">
+    <app-admin-change-password></app-admin-change-password>
+  </div>
 
 </div>

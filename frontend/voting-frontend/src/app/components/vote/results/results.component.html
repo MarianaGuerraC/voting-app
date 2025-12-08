@@ -2,9 +2,13 @@
 
   <h2 class="text-center mb-3">Voting Results</h2>
 
+  <!-- BOTON VOLVER SOLO PARA ADMIN -->
+  <div class="mb-3" *ngIf="isAdmin">
+    <button class="btn btn-secondary" (click)="goBack()">Back to Admin Panel</button>
+  </div>
+
   <!-- TOP CANDIDATES -->
   <h4 class="mb-3">Top Candidates</h4>
-
   <table *ngIf="results.length > 0" class="table table-bordered">
     <thead>
       <tr>
@@ -26,7 +30,6 @@
 
   <!-- LISTA DE VOTOS -->
   <h4>Votes Entered</h4>
-
   <table class="table table-striped">
     <thead>
       <tr>
@@ -34,7 +37,7 @@
         <th>Voter</th>
         <th>Candidate</th>
         <th>Date</th>
-        <th>Detail</th>
+        <th *ngIf="isAdmin">Detail</th> <!-- solo admin ve la columna detail -->
       </tr>
     </thead>
     <tbody>
@@ -43,7 +46,7 @@
         <td>{{ item.voter_name }} {{ item.voter_lastName }}</td>
         <td>{{ item.candidate_name }} {{ item.candidate_lastName }}</td>
         <td>{{ item.vote_date | date:'short' }}</td>
-        <td>
+        <td *ngIf="isAdmin">
           <button class="btn btn-primary btn-sm" (click)="viewDetail(item.vote_id)">
             View
           </button>
@@ -52,18 +55,14 @@
     </tbody>
   </table>
 
-  <!-- DETALLE DEL VOTO -->
-  <div *ngIf="selectedVote" class="card p-3 mt-3">
+  <!-- DETALLE DEL VOTO SOLO ADMIN -->
+  <div *ngIf="isAdmin && selectedVote" class="card p-3 mt-3">
     <h5>Vote Detail</h5>
-
     <p><strong>ID Vote:</strong> {{ selectedVote.vote_id }}</p>
-
     <p><strong>Voter:</strong> {{ selectedVote.voter_name }} {{ selectedVote.voter_lastName }}</p>
     <p><strong>Document:</strong> {{ selectedVote.voter_document }}</p>
     <p><strong>Date of Birth:</strong> {{ selectedVote.voter_dob }}</p>
-
     <p><strong>Candidate:</strong> {{ selectedVote.candidate_name }} {{ selectedVote.candidate_lastName }}</p>
-
     <p><strong>Vote Date:</strong> {{ selectedVote.vote_date | date:'short' }}</p>
   </div>
 
