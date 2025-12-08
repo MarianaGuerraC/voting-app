@@ -49,6 +49,6 @@ export const routes: Routes = [
     ]
   },
 
-  // Cualquier ruta desconocida → login
-  { path: '**', redirectTo: 'login' }
+  // Cualquier ruta desconocida manda al vote-form
+  { path: '**', redirectTo: 'vote-form' }
 ];

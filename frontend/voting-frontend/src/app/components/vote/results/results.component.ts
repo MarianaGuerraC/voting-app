@@ -2,11 +2,11 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VoteService } from '../../../services/vote.service';
 import { AuthService } from '../../../services/auth.service';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-results',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.css']
 })

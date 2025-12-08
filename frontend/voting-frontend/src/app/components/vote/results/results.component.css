@@ -1,0 +1,29 @@
+/* =====================================================
+   BOTONES PRINCIPALES RESULTS
+   ===================================================== */
+.results-buttons {
+  display: flex;
+  justify-content: center; /* centra los botones */
+  gap: 1rem;               /* espacio entre los botones */
+  margin: 1.5rem 0;        /* espacio arriba y abajo */
+}
+
+.results-buttons .btn {
+  min-width: 120px;        /* opcional: ancho uniforme */
+  text-align: center;
+}
+
+/* =====================================================
+   PAGINACION CENTRADA
+   ===================================================== */
+.results-pagination {
+  display: flex;
+  justify-content: center; /* centra todo el bloque */
+  align-items: center;     /* alinea verticalmente */
+  gap: 1rem;               /* espacio entre Previous, Page info y Next */
+  margin: 1rem 0;          /* espacio arriba y abajo */
+}
+
+.results-pagination button {
+  min-width: 80px;         /* ancho uniforme de botones */
+}
