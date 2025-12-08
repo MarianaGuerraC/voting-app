@@ -27,4 +27,14 @@ getCandidates(): Observable<any> {
   getResults(): Observable<any> {
     return this.http.get(`${this.apiUrl}/votes/results`);
   }
+
+  getVotesList() {
+  return this.http.get<any[]>(`${this.apiUrl}/votes/all`);
+}
+
+getVoteDetail(id: number) {
+  return this.http.get<any>(`${this.apiUrl}/votes/${id}`);
+}
+
+
 }

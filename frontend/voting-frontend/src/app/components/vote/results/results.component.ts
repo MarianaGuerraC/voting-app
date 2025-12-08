@@ -1,4 +1,4 @@
-import { Component, OnInit , ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VoteService } from '../../../services/vote.service';
 
@@ -10,7 +10,10 @@ import { VoteService } from '../../../services/vote.service';
 })
 export class ResultsComponent implements OnInit {
 
-  results: any[] = [];
+  results: any[] = [];       //candidatos + votos
+  votes: any[] = [];         //lista de votos
+  selectedVote: any = null;  //detalle del voto
+
   isLoading = true;
   errorMessage = '';
 
@@ -18,6 +21,7 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadResults();
+    this.loadVotes();
   }
 
   loadResults(): void {
@@ -26,13 +30,36 @@ export class ResultsComponent implements OnInit {
         this.results = data;
         this.isLoading = false;
         this.cdr.detectChanges();
-
       },
-      error: (error) => {
-        console.error(error);
+      error: () => {
         this.errorMessage = 'Error loading results.';
         this.isLoading = false;
         this.cdr.detectChanges();
+      }
+    });
+  }
+
+  loadVotes(): void {
+    this.voteService.getVotesList().subscribe({
+      next: (data) => {
+        this.votes = data;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.errorMessage = 'Error loading votes.';
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  viewDetail(id: number) {
+    this.voteService.getVoteDetail(id).subscribe({
+      next: (data) => {
+        this.selectedVote = data;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        alert('Error loading vote detail');
       }
     });
   }

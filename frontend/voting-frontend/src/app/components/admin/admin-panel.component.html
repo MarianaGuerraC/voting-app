@@ -1,7 +1,33 @@
 <div class="admin-container">
-  <h1>Administration Panel</h1>
 
-  <p>Welcome to the protected area, accessible only with a valid session.</p>
+    <h1 class="text-center mb-4">Administration Panel</h1>
+    
+    <div class="menu-grid">
 
-  <button class="btn btn-danger" (click)="logout()">Log out</button>
+        <button class="menu-btn" [routerLink]="['top-candidates']">
+            Most Voted Candidates
+        </button>
+
+        <button class="menu-btn" [routerLink]="['vote-list']">
+            List Registered Votes
+        </button>
+        
+        <button class="menu-btn" [routerLink]="['voter-form']">
+            Add New Voter
+        </button>
+
+        <button class="menu-btn" [routerLink]="['change-password']">
+            Change Administrator Password
+        </button>
+
+    </div>
+
+    <div class="content-area mt-4">
+        <router-outlet></router-outlet>
+    </div>
+
+    <div class="logout-area mt-4">
+        <button class="btn btn-danger w-100" (click)="logout()">Log Out</button>
+    </div>
+
 </div>

@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 import { AuthLoginComponent } from './components/auth/auth-login/auth-login.component';
 import { AdminPanelComponent } from './components/admin/admin-panel.component';
 import { VoterFormComponent } from './components/voter/voter-form.component';
-import { VoterListComponent } from './components/voter/voter-list.component';
 import { VoteFormComponent } from './components/vote/vote-form/vote-form.component';
 import { ResultsComponent } from './components/vote/results/results.component';
 import { authGuard } from './services/auth-guard';
@@ -25,12 +24,6 @@ export const routes: Routes = [
     path: 'admin', 
     component: AdminPanelComponent, 
     title: 'Panel Admin',
-    canActivate: [authGuard]
-  },
-  { 
-    path: 'voter-list', 
-    component: VoterListComponent, 
-    title: 'Listado Votantes',
     canActivate: [authGuard]
   },
   { 
