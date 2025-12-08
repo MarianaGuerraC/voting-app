@@ -1,1 +1,39 @@
-<p>results works!</p>
+<div class="container mt-4">
+
+  <h2 class="text-center mb-3">Voting Results</h2>
+
+  <!-- Cargando -->
+  <div *ngIf="isLoading" class="text-center">
+    <p>Loading results...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Tabla de resultados -->
+  <table *ngIf="!isLoading && results.length > 0" class="table table-striped table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Candidate</th>
+        <th>Votes</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let r of results; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ r.name }} {{ r.lastName }}</td>
+        <td>{{ r.vote_count }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Por si no hay votos aun -->
+  <div *ngIf="!isLoading && results.length === 0" class="text-center">
+    <p>No votes registered yet.</p>
+  </div>
+
+</div>

@@ -23,4 +23,8 @@ getCandidates(): Observable<any> {
       candidate_id: candidateId
     });
   }
+
+  getResults(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/votes/results`);
+  }
 }

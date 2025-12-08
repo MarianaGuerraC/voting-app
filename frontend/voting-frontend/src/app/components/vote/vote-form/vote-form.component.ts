@@ -24,6 +24,11 @@ export class VoteFormComponent implements OnInit {
 
   constructor(private voteService: VoteService, public router: Router,  private cdr: ChangeDetectorRef) { }
 
+  clearMessages(): void {
+        this.successMessage = '';
+        this.errorMessage = '';
+  }
+
   ngOnInit() {
     this.voteService.getCandidates().subscribe({
       next: (data) => {
