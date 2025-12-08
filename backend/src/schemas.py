@@ -69,3 +69,9 @@ class CandidateResult(BaseModel):
     lastName: str
     vote_count: int
     model_config = ConfigDict(from_attributes=True)
+
+#para cambiar la contraseña del admin
+class AdminPasswordUpdate(BaseModel):
+    old_password: str
+    new_password: str
+    confirm_password: str

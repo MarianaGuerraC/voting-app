@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from src.config.database import engine
 from src.models import Base
-from src.routers import votes, voters, auth
+from src.routers import votes, voters, auth, admin
 from fastapi.middleware.cors import CORSMiddleware
 
 # Inicializar DB antes de crear la app
@@ -22,6 +22,7 @@ app.add_middleware(
 app.include_router(votes.router)
 app.include_router(voters.router)
 app.include_router(auth.router)
+app.include_router(admin.router)
 
 @app.get("/")
 def root():

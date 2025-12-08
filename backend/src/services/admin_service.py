@@ -43,3 +43,25 @@ class AdminService:
                 detail="Incorrect credentials"
             )
         return admin
+
+    @staticmethod
+    def change_password(db: Session, admin_id: int, old_password: str, new_password: str):
+
+        #traigo admin por id
+        from src.models import Admin
+        admin = db.query(Admin).filter(Admin.id == admin_id).first()
+
+        if not admin:
+            raise HTTPException(status_code=404, detail="Admin not found")
+
+        #verifico contraseña actual
+        if not AdminService.verify_password(old_password, admin.password):
+            raise HTTPException(status_code=400, detail="Wrong current password")
+
+        #hasheo nueva contraseña
+        admin.password = AdminService.hash_password(new_password)
+
+        db.commit()
+        db.refresh(admin)
+
+        return admin
