@@ -27,6 +27,7 @@ export class VoteFormComponent implements OnInit {
   clearMessages(): void {
         this.successMessage = '';
         this.errorMessage = '';
+        this.cdr.detectChanges();
   }
 
   ngOnInit() {
@@ -46,6 +47,7 @@ export class VoteFormComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
+    this.cdr.detectChanges();
     if (!this.ci || !this.selectedCandidate) {
       this.errorMessage = 'Please complete all fields.';
       this.cdr.detectChanges();
