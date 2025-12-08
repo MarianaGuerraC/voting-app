@@ -1,0 +1,38 @@
+/* Mensajes de error de cada campo */
+.text-danger {
+  color: #e74c3c; /* rojo fuerte */
+  font-size: 0.875rem;
+  margin-top: 0.15rem;
+  display: block;
+}
+.d-grid.gap-2 {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.d-grid.gap-2 .btn {
+  flex: 1;
+  min-width: 120px; 
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+}
+
+.form-check-input[type="radio"] {
+    position: static; 
+    margin-left: 0; 
+    margin-bottom: 0 !important; 
+    margin-top: 0; 
+    margin-right: 0.5rem; 
+    height: 1.25rem;
+    width: 1.25rem;
+}
+
+.form-check-label {
+    margin-bottom: 0;
+    line-height: 1.2;
+}

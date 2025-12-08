@@ -7,6 +7,8 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { VoterService } from '../../services/voter.service';
 import * as voterModel from '../../models/voter.model';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 @Component({
@@ -29,7 +31,8 @@ export class VoterFormComponent implements OnInit {
     private fb: FormBuilder,
     private voterService: VoterService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -68,30 +71,31 @@ export class VoterFormComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    this.errorMessage = null;
-    this.successMessage = null;
+onSubmit(): void {
+  this.errorMessage = null;
+  this.successMessage = null;
 
-    if (this.voterForm.invalid) {
-      this.errorMessage = 'Please complete all fields.';
-      return;
-    }
+  const payload: voterModel.VoterPayload = this.voterForm.value;
+  let request: Observable<voterModel.Voter>;
 
-    const payload: voterModel.VoterPayload = this.voterForm.value;
-    let request: Observable<voterModel.Voter>;
+  request = this.isEditMode && this.voterId
+    ? this.voterService.updateVoter(this.voterId, payload)
+    : this.voterService.createVoter(payload);
 
-    request = this.isEditMode && this.voterId
-      ? this.voterService.updateVoter(this.voterId, payload)
-      : this.voterService.createVoter(payload);
-
-    request.subscribe({
-      next: () => {
-        this.successMessage = `Voter successfully ${this.isEditMode ? 'updated' : 'created'}.`;
-        setTimeout(() => this.router.navigate(['/voter-list']), 800);
-      },
-      error: () => {
-        this.errorMessage = 'Error processing request.';
+  request.subscribe({
+    next: () => {
+      this.successMessage = `Voter successfully ${this.isEditMode ? 'updated' : 'created'}.`;
+      if (!this.isEditMode) {
+        this.voterForm.reset();
       }
-    });
-  }
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      this.errorMessage = err.error?.detail || 'Error processing request.';
+    }
+  });
+}
+
+
+
 }

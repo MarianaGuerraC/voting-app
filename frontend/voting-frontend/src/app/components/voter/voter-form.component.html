@@ -8,52 +8,82 @@
 
     <form [formGroup]="voterForm" (ngSubmit)="onSubmit()">
 
+      <!-- Document ID -->
       <div class="mb-3">
         <label class="form-label">Document ID</label>
-        <input type="text" formControlName="document" class="form-control">
+        <input type="text" formControlName="document" class="form-control" placeholder="Enter document">
+        <div *ngIf="voterForm.get('document')?.invalid && voterForm.get('document')?.touched"
+             class="text-danger">Document is required</div>
       </div>
 
+      <!-- Name / Last Name -->
       <div class="row">
         <div class="col-md-6 mb-3">
           <label class="form-label">Name</label>
           <input type="text" formControlName="name" class="form-control" placeholder="Enter name">
+          <div *ngIf="voterForm.get('name')?.invalid && voterForm.get('name')?.touched"
+               class="text-danger">Name is required</div>
         </div>
 
         <div class="col-md-6 mb-3">
           <label class="form-label">Last Name</label>
-          <input type="text" formControlName="lastName" class="form-control" placeholder="Enter last name>
+          <input type="text" formControlName="lastName" class="form-control" placeholder="Enter last name">
+          <div *ngIf="voterForm.get('lastName')?.invalid && voterForm.get('lastName')?.touched"
+               class="text-danger">Last Name is required</div>
         </div>
       </div>
 
+      <!-- Date of Birth -->
       <div class="mb-3">
         <label class="form-label">Date of Birth</label>
-        <input type="date" formControlName="dob" class="form-control" placeholder="dd/mm/yyyy">
+        <input type="date" formControlName="dob" class="form-control">
+        <div *ngIf="voterForm.get('dob')?.invalid && voterForm.get('dob')?.touched"
+             class="text-danger">Date of Birth is required</div>
       </div>
 
-      <!-- RADIO BUTTONS -->
-      <div class="mb-3">
-        <label class="form-label d-block">Role</label>
+      <!-- Role -->
+<div class="mb-3">
+  <label class="form-label d-block mb-2">Role</label> 
 
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" formControlName="is_candidate" [value]="false">
-          <label class="form-check-label">Voter</label>
-        </div>
+  <div class="d-flex justify-content-around">
+    
+    <div class="form-check">
+      <input 
+        class="form-check-input" 
+        type="radio" 
+        formControlName="is_candidate" 
+        [value]="false" 
+        id="roleVoter"
+      >
+      <label class="form-check-label" for="roleVoter">
+        Voter
+      </label>
+    </div>
 
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" formControlName="is_candidate" [value]="true">
-          <label class="form-check-label">Candidate</label>
-        </div>
+    <div class="form-check">
+      <input 
+        class="form-check-input" 
+        type="radio" 
+        formControlName="is_candidate" 
+        [value]="true" 
+        id="roleCandidate"
+      >
+      <label class="form-check-label" for="roleCandidate">
+        Candidate
+      </label>
+    </div>
 
-      </div>
+  </div>
+</div>
 
-      <!-- Mensajes -->
+      <!-- Mensajes generales de backend -->
       <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
       <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
 
       <div class="d-grid gap-2">
         <button class="btn btn-primary" [disabled]="voterForm.invalid">
-          {{ isEditMode ? 'Update Voter' : 'Create Voter' }}
-        </button>
+          {{ isEditMode ? 'Update Voter' : 'Create voter' }}
+        </button> 
         <a [routerLink]="['/voter-list']" class="btn btn-secondary">Cancel</a>
       </div>
 
