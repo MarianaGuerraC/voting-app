@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VoteService } from '../../../services/vote.service';
-import { AuthService } from '../../../services/auth.service'; // <-- importamos AuthService
+import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,18 @@ export class ResultsComponent implements OnInit {
 
   isLoading = true;
   errorMessage = '';
-  isAdmin = false; // <-- flag admin
+  isAdmin = false;
+
+  //paginacion
+  candidatesPerPage = 5;
+  currentCandidatesPage = 1;
+  totalCandidatesPages = 1;
+  pagedResults: any[] = [];
+
+  votesPerPage = 5;
+  currentVotesPage = 1;
+  totalVotesPages = 1;
+  pagedVotes: any[] = [];
 
   constructor(
     private voteService: VoteService,
@@ -28,17 +39,16 @@ export class ResultsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isAdmin = !!this.authService.getToken();
     this.loadResults();
     this.loadVotes();
-
-    //reviso si hay token de admin para habilitar el boton
-    this.isAdmin = !!this.authService.getToken();
   }
 
   loadResults(): void {
     this.voteService.getResults().subscribe({
       next: (data) => {
         this.results = data;
+        this.updatePagedResults();
         this.isLoading = false;
         this.cdr.detectChanges();
       },
@@ -54,6 +64,7 @@ export class ResultsComponent implements OnInit {
     this.voteService.getVotesList().subscribe({
       next: (data) => {
         this.votes = data;
+        this.updatePagedVotes();
         this.cdr.detectChanges();
       },
       error: () => {
@@ -63,6 +74,7 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  // detalle de voto
   viewDetail(id: number) {
     this.voteService.getVoteDetail(id).subscribe({
       next: (data) => {
@@ -73,7 +85,34 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  //vuelvo al panel admin
   goBack() {
     this.router.navigate(['/admin']);
+  }
+
+  //paginacion candidatos
+  updatePagedResults(): void {
+    const start = (this.currentCandidatesPage - 1) * this.candidatesPerPage;
+    const end = start + this.candidatesPerPage;
+    this.pagedResults = this.results.slice(start, end);
+    this.totalCandidatesPages = Math.ceil(this.results.length / this.candidatesPerPage);
+  }
+
+  goToCandidatesPage(page: number) {
+    this.currentCandidatesPage = page;
+    this.updatePagedResults();
+  }
+
+  //paginacion votos
+  updatePagedVotes(): void {
+    const start = (this.currentVotesPage - 1) * this.votesPerPage;
+    const end = start + this.votesPerPage;
+    this.pagedVotes = this.votes.slice(start, end);
+    this.totalVotesPages = Math.ceil(this.votes.length / this.votesPerPage);
+  }
+
+  goToVotesPage(page: number) {
+    this.currentVotesPage = page;
+    this.updatePagedVotes();
   }
 }

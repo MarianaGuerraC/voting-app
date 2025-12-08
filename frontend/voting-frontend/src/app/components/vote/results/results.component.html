@@ -9,7 +9,7 @@
 
   <!-- TOP CANDIDATES -->
   <h4 class="mb-3">Top Candidates</h4>
-  <table *ngIf="results.length > 0" class="table table-bordered">
+  <table *ngIf="pagedResults.length > 0" class="table table-bordered">
     <thead>
       <tr>
         <th>#</th>
@@ -18,13 +18,21 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let r of results; let i = index">
-        <td>{{ i + 1 }}</td>
+      <tr *ngFor="let r of pagedResults; let i = index">
+        <td>{{ (currentCandidatesPage - 1) * candidatesPerPage + i + 1 }}</td>
         <td>{{ r.name }} {{ r.lastName }}</td>
         <td>{{ r.vote_count }}</td>
       </tr>
     </tbody>
   </table>
+
+  <div *ngIf="totalCandidatesPages > 1" class="mb-3">
+    <button class="btn btn-sm btn-secondary" [disabled]="currentCandidatesPage === 1" 
+            (click)="goToCandidatesPage(currentCandidatesPage - 1)">Previous</button>
+    <span>Page {{currentCandidatesPage}} of {{totalCandidatesPages}}</span>
+    <button class="btn btn-sm btn-secondary" [disabled]="currentCandidatesPage === totalCandidatesPages" 
+            (click)="goToCandidatesPage(currentCandidatesPage + 1)">Next</button>
+  </div>
 
   <hr>
 
@@ -37,23 +45,29 @@
         <th>Voter</th>
         <th>Candidate</th>
         <th>Date</th>
-        <th *ngIf="isAdmin">Detail</th> <!-- solo admin ve la columna detail -->
+        <th *ngIf="isAdmin">Detail</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of votes">
+      <tr *ngFor="let item of pagedVotes">
         <td>{{ item.vote_id }}</td>
         <td>{{ item.voter_name }} {{ item.voter_lastName }}</td>
         <td>{{ item.candidate_name }} {{ item.candidate_lastName }}</td>
         <td>{{ item.vote_date | date:'short' }}</td>
         <td *ngIf="isAdmin">
-          <button class="btn btn-primary btn-sm" (click)="viewDetail(item.vote_id)">
-            View
-          </button>
+          <button class="btn btn-primary btn-sm" (click)="viewDetail(item.vote_id)">View</button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <div *ngIf="totalVotesPages > 1" class="mb-3">
+    <button class="btn btn-sm btn-secondary" [disabled]="currentVotesPage === 1" 
+            (click)="goToVotesPage(currentVotesPage - 1)">Previous</button>
+    <span>Page {{currentVotesPage}} of {{totalVotesPages}}</span>
+    <button class="btn btn-sm btn-secondary" [disabled]="currentVotesPage === totalVotesPages" 
+            (click)="goToVotesPage(currentVotesPage + 1)">Next</button>
+  </div>
 
   <!-- DETALLE DEL VOTO SOLO ADMIN -->
   <div *ngIf="isAdmin && selectedVote" class="card p-3 mt-3">
