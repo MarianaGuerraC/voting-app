@@ -1,13 +1,13 @@
 <div class="container mt-4">
 
-  <h2 class="text-center mb-3">Administration Panel</h2>
+  <h2 class="text-center mb-3">Administration panel</h2>
 
   <!-- Botones de navegación dentro del panel -->
   <div class="mb-4 d-flex gap-2">
-    <button class="btn btn-primary" (click)="selectedTab = 'voter'">Add New Voter</button>
-    <button class="btn btn-secondary" (click)="selectedTab = 'password'">Change Admin Password</button>
-    <button class="btn btn-success" (click)="router.navigate(['/results'])">View Results</button>
-    <button class="btn btn-danger ms-auto" (click)="logout()">Log Out</button>
+    <button class="btn btn-primary" (click)="selectedTab = 'voter'">Add new voter</button>
+    <button class="btn btn-secondary" (click)="selectedTab = 'password'">Change admin password</button>
+    <button class="btn btn-success" (click)="router.navigate(['/results'])">View results</button>
+    <button class="btn btn-danger ms-auto" (click)="logout()">Log out</button>
   </div>
 
   <!-- Contenido según tab seleccionado -->

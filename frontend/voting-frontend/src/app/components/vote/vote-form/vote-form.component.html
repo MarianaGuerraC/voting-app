@@ -1,5 +1,5 @@
 <div class="vote-container card p-4 shadow-sm">
-  <h2 class="card-title text-center mb-4">Public Voting Form</h2>
+  <h2 class="card-title text-center mb-4">Public voting form</h2>
 
   <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
     {{ errorMessage }}
@@ -10,7 +10,7 @@
 
   <form #voteForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group mb-3">
-      <label for="ci" class="form-label">Identity document(CI):</label>
+      <label for="ci" class="form-label">Document identity(CI):</label>
       <input
         id="ci"
         type="text"
@@ -59,7 +59,7 @@
       [disabled]="voteForm.invalid"
       class="btn btn-primary w-100"
     >
-      CONFIRM VOTE
+      Confirm vote
     </button>
   </form>
 
@@ -75,7 +75,7 @@
       class="btn btn-sm btn-outline-info"
       (click)="router.navigate(['/results'])"
     >
-      View Live Results
+      View live results
     </button>
 
     <button
@@ -83,7 +83,7 @@
       class="btn btn-sm btn-outline-secondary ms-2"
       (click)="router.navigate(['/login'])"
     >
-      Admin Access
+      Admin access
     </button>
   </div>
 </div>
